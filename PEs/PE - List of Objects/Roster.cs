@@ -165,13 +165,13 @@ namespace PE___List_of_Objects
                     output.WriteLine($"{s.FullName},{s.Major},{s.Year}");
                 }
 
-                SmartConsole.PrintSuccess($"{name} roster saved!");
+                SmartConsole.PrintSuccess($"Roster saved!");
                 output.Close();
             }
             //write this message if an exception is called.
             catch(Exception e)
             {
-                SmartConsole.PrintError($"An error occured when attempting to save the {name} roster");
+                SmartConsole.PrintError($"An error occured when attempting to save the rosters");
             }
         }
 

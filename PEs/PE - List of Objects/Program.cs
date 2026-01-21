@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Roster freshmanRoster = new Roster("Freshman");
             Roster allRoster = new Roster("All Students");
+            Roster freshmanRoster = allRoster.GetFreshmanRoster(); ;
             int userInput = 0;
 
             do
@@ -14,8 +14,9 @@
                     "\n1 - Add a student" +
                     "\n2 - Change major for students" +
                     "\n3 - Print the rosters" +
-                    "\n4 - Quit" +
-                    "\n>", 1, 4);
+                    "\n4 - Save all Students" +
+                    "\n5 - Quit" +
+                    "\n>", 1, 5);
                 switch (userInput)
                 {
                     case 1:
@@ -47,9 +48,12 @@
                         break;
 
                     case 4:
-                        Console.WriteLine("Goodbye!");
+                        allRoster.Save();
                         break;
 
+                    case 5:
+                        Console.WriteLine("Goodbye!");
+                        break;
                 }
             } while (userInput != 4);
         }
