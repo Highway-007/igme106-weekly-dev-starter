@@ -114,11 +114,10 @@
         /// Input helper written by Prof. Mesh
         /// Uses the given string to prompt the user for input and set
         /// the color to cyan while they type.
-        /// Added in as a replacement of the basic prompt function from the original SmartConsole.
         /// </summary>
         /// <param name="prompt">What to print before waiting for input</param>
         /// <returns>A trimmed version of what the user entered</returns>
-        public static string PromptForInput(string prompt)
+        public static string Prompt(string prompt)
         {
             // Always print in white
             Console.ForegroundColor = ConsoleColor.White;
@@ -134,34 +133,5 @@
             Console.ForegroundColor = ConsoleColor.White;
             return response;
         }
-
-        /// <summary>
-        /// Helper method to prompt the user to enter a number. If their
-        /// response isn't a valid int or isn't in the desired range, reprompt
-        /// </summary>
-        /// <param name="prompt">The string to use in the initial prompt</param>
-        /// <param name="min">The minimum accepted value (inclusive)</param>
-        /// <param name="max">The maximum accepted value (inclusive)</param>
-        /// <returns>The final, valid, user-entered value.</returns>
-        public static int PromptForInt(string prompt, int min, int max)
-        {
-            int result;
-            bool correctInput = int.TryParse(PromptForInput(prompt), out result);
-
-            while (result < min || result > max || !correctInput)
-            {
-                correctInput = int.TryParse(
-                    PromptForInput(
-                            String.Format("Value must be between {0} and {1}:",
-                            min,
-                            max)
-                        ),
-                    out result
-                    );
-            }
-            return result;
-        }
-    }
-
     }
 }

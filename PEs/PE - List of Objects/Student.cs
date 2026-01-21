@@ -48,9 +48,14 @@ namespace PE___List_of_Objects
         /// <param name="year">Student's year/level of education</param>
         public Student(string fullName, string major, int year)
         {
-            this.fullName = fullName;
-            this.major = major;
+            this.fullName = fullName.Trim();
+            this.major = major.Trim();
             this.year = year;
+        }
+
+        public override string ToString()
+        {
+            return $"{fullName} - {major} - {year}";
         }
     }
 }
