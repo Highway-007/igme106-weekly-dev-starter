@@ -37,8 +37,28 @@ namespace PE___List_of_Objects
         /// <param name="students">list of students on the roster</param>
         public Roster(string name)
         {
+            StreamReader input;
             this.name = name.Trim();
             this.students = new List<Student> { };
+
+            if(File.Exists($@"..\..\..\..\..\..\{name}.txt"))
+            {
+                try
+                {
+                    input = new StreamReader($@"..\..\..\..\..\..\{name}.txt");
+                    string line;
+                    string[] studentInfo;
+                    while ((line = input.ReadLine()) != null)
+                    {
+                        studentInfo = line.Split(",");
+                        students.Add(new Student(studentInfo[0], studentInfo[1], int.Parse(studentInfo[2])));
+                    }
+                }
+                catch (Exception)
+                {
+
+                }
+            }
         }
 
         //Methods
@@ -84,6 +104,11 @@ namespace PE___List_of_Objects
             }
         }
 
+        /// <summary>
+        /// Creates a new student via user info
+        /// then checks that there is no student with a matching name already in the roster
+        /// </summary>
+        /// <returns>returns the new student created</returns>
         public Student AddStudent()
         {
             //creates a new student based on user input via the Smart Console
@@ -108,13 +133,68 @@ namespace PE___List_of_Objects
             }
         }
 
+        /// <summary>
+        /// Writes a rosters name and no. of students, along with listing each s.ToString info
+        /// </summary>
         public void DisplayRosters()
         {
             Console.WriteLine($"{name} has {students.Count} students: ");
+            //Loops through entire roster
             foreach(Student s in students)
             {
                 Console.WriteLine(s.ToString());
             }
+        }
+
+        //FILE IO PE SPECIFIC METHODS
+
+        /// <summary>
+        /// uses roster name as filename, then writes students to the file
+        /// </summary>
+        public void Save()
+        {
+            StreamWriter output;
+
+            //Attempt to open file
+            try
+            {
+                output = new StreamWriter($@"..\..\..\..\..\..\{name}.txt");
+
+                foreach(Student s in students)
+                {
+                    output.WriteLine($"{s.FullName},{s.Major},{s.Year}");
+                }
+
+                SmartConsole.PrintSuccess($"{name} roster saved!");
+                output.Close();
+            }
+            //write this message if an exception is called.
+            catch(Exception e)
+            {
+                SmartConsole.PrintError($"An error occured when attempting to save the {name} roster");
+            }
+        }
+
+        /// <summary>
+        /// Create a freshman Roster object and adds any existing 1st year students to it
+        /// </summary>
+        /// <returns>A reference to the freshmanRoster object</returns>
+        public Roster GetFreshmanRoster()
+        {
+            Roster freshmanRoster = new Roster("Freshman");
+            if(students.Count > 0)
+            {
+                //Searches through list of students
+                foreach (Student student in students)
+                {
+                    //If a student is a first year, add them to Freshman Rostr
+                    if (student.Year == 1)
+                    {
+                        freshmanRoster.Students.Add(student);
+                    }
+                }
+            }
+            return freshmanRoster;
         }
     }
 }

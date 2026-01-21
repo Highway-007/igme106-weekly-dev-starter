@@ -53,6 +53,10 @@ namespace PE___List_of_Objects
             this.year = year;
         }
 
+        /// <summary>
+        /// Overrides the base ToString method to print info about each student in a readable format
+        /// </summary>
+        /// <returns>returns the string of info about the student</returns>
         public override string ToString()
         {
             return $"{fullName} - {major} - {year}";
