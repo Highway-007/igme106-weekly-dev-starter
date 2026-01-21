@@ -8,8 +8,6 @@
             Roster allRoster = new Roster("All Students");
             int userInput = 0;
 
-            allRoster.Save();
-
             do
             {
                 userInput = SmartConsole.Prompt("Choose 1 of the following options: " +
