@@ -55,7 +55,7 @@
                         Console.WriteLine("Goodbye!");
                         break;
                 }
-            } while (userInput != 4);
+            } while (userInput != 5);
         }
     }
 }

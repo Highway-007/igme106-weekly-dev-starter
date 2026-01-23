@@ -39,7 +39,7 @@ namespace PE___List_of_Objects
         {
             StreamReader input;
             this.name = name.Trim();
-            this.students = new List<Student> { };
+            students = new List<Student> { };
 
             if(File.Exists($@"..\..\..\..\..\..\{name}.txt"))
             {
@@ -53,6 +53,7 @@ namespace PE___List_of_Objects
                         studentInfo = line.Split(",");
                         students.Add(new Student(studentInfo[0], studentInfo[1], int.Parse(studentInfo[2])));
                     }
+                    input.Close();
                 }
                 catch (Exception)
                 {
