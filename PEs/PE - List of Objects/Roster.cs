@@ -41,11 +41,11 @@ namespace PE___List_of_Objects
             this.name = name.Trim();
             students = new List<Student> { };
 
-            if(File.Exists($@"..\..\..\..\..\..\{name}.txt"))
+            if(File.Exists($@"{name}.txt"))
             {
                 try
                 {
-                    input = new StreamReader($@"..\..\..\..\..\..\{name}.txt");
+                    input = new StreamReader($@"{name}.txt");
                     string line;
                     string[] studentInfo;
                     while ((line = input.ReadLine()) != null)
@@ -159,7 +159,7 @@ namespace PE___List_of_Objects
             //Attempt to open file
             try
             {
-                output = new StreamWriter($@"..\..\..\..\..\..\{name}.txt");
+                output = new StreamWriter($@"{name}.txt");
 
                 foreach(Student s in students)
                 {
