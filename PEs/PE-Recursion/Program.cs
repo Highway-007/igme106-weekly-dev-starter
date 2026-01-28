@@ -1,4 +1,6 @@
-﻿namespace PE_Recursion
+﻿using System;
+
+namespace PE_Recursion
 {
     internal class Program
     {
@@ -150,12 +152,26 @@
 
         public static bool IsPalindrome(string word)
         {
-            return true;
+            return Reverse(word) == word;
         }
 
         public static string Reverse(string word)
         {
-            return null;
+            //state change
+            char[] wordChars = word.ToCharArray();
+            string recursiveWords = word.Substring(1);
+
+            //base cases
+            if(word.Length <= 1)
+            {
+                return word;
+            }          
+
+            //state change
+            else
+            {
+                return Reverse(recursiveWords) + wordChars[0];
+            }
         }
     }
 }
