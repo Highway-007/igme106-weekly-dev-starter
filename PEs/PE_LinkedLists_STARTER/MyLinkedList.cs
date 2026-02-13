@@ -39,28 +39,55 @@
             get
             {
                 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                return default(T); // tmp
                 // TODO: Implement the get for the indexer
+                MyLinkedNode<T> currNode;
+
                 // Check the index
+                if (index < Count)
+                {
+                    // Start at the head
+                    currNode = new MyLinkedNode<T>(head.Data);
+                    currNode.Next = head.Next;
 
-                // Start at the head
+                    // Hop down the chain index # of times
+                    for (int i = 0; i < index; i++)
+                    {
+                        currNode = currNode.Next;
+                    }
 
-                // Hop down the chain index # of times
+                    // Return the data where we stopped
+                    return currNode.Data;
+                    
 
-                // Return the data where we stopped
+                }
+                throw new IndexOutOfRangeException();
+
                 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             }
             set
             {
                 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 // TODO: Implement the set for the indexer
+                MyLinkedNode<T> currNode;
+
                 // Check the index
+                if (index < Count)
+                {
+                    // Start at the head
+                    currNode = new MyLinkedNode<T>(head.Data);
+                    currNode.Next = head.Next;
 
-                // Start at the head
+                    // Hop down the chain index # of times
+                    for (int i = 0; i < index; i++)
+                    {
+                        currNode = currNode.Next;
+                    }
 
-                // Hop down the chain index # of times
+                    // Return the data where we stopped
+                    currNode.Data = value;
 
-                // Set the data where we stopped
+                }
+                throw new IndexOutOfRangeException();
                 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             }
         }
@@ -74,16 +101,40 @@
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             // TODO: Implement the Add method
             // Adding to an empty list, set the head
+            MyLinkedNode<T> currNode;
 
-                // Adding to the end of a non - empty list!
+            if (Count == 0)
+            {
+                head = new MyLinkedNode<T>(data);
+            }
+
+            // Adding to the end of a non - empty list!
+            else
+            {
                 // We need to find the end first - and we have to start at head to do that
-
-                // Hop down the chain of nodes until we hit the end (i.e. the node with no next)
-
-                // Now make that last node refer to the new one
+                currNode = head;
+                do
+                {
+                    // Hop down the chain of nodes until we hit the end (i.e. the node with no next)
+                    if(currNode.Next == null)
+                    {
+                        // Now make that last node refer to the new one
+                        currNode.Next = new MyLinkedNode<T>(data);
+                        currNode = new MyLinkedNode<T>(currNode.Data);
+                        break;
+                    }
+                    //If it isnt the end, keep searching
+                    else
+                    {
+                        currNode = currNode.Next;
+                    }
+                }
+                while (currNode.Next != null);
+            }
 
             // No matter how we added, update the count
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            Count++;
         }
 
         /// <summary>
@@ -94,21 +145,47 @@
         public bool Remove(T data)
         {
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            return false; // tmp
             // TODO: Implement the Remove method
+            MyLinkedNode<T> currNode;
+
             // Quit if nothing to remove
+            if (Count == 0)
+            {
+                return false;
+            }
 
             // If the data is at the head, change head to reference head's Next, 
             // reduce the count, and return true
+            else if(head.Data.Equals(data))
+            {
+                head = head.Next;
+                Count--;
+                return true;
+            }
 
             // If it's after head (anywhere after head), we have to search for it
+            currNode = head;
 
             // Hop down the chain checking if we found what to remove as we go
-
+            do
+            {
                 // We actually want to check if we're removing the node AFTER the one
                 // we're currently on.
+                if (currNode.Next.Equals(data))
+                {
+                    currNode.Next = new MyLinkedNode<T>(currNode.Next.Next.Data);
+                    break;
+                }
+                //If it isnt the end, keep searching
+                else
+                {
+                    currNode = new MyLinkedNode<T>(currNode.Next.Data);
+                }
+            }
+            while (currNode.Next != null);
 
             // If we got this far, we didn't find anything to remove
+            return false;
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
 
@@ -120,6 +197,8 @@
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             // TODO: Implement the Clear method. You do NOT need a loop here!!!
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            head.Next = null;
+            head.Data = default(T);
         }
     }
 }
