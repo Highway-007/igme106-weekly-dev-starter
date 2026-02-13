@@ -120,7 +120,7 @@
                     {
                         // Now make that last node refer to the new one
                         currNode.Next = new MyLinkedNode<T>(data);
-                        currNode = new MyLinkedNode<T>(currNode.Data);
+                        //currNode = new MyLinkedNode<T>(currNode.Data);
                         break;
                     }
                     //If it isnt the end, keep searching
