@@ -46,8 +46,7 @@
                 if (index < Count)
                 {
                     // Start at the head
-                    currNode = new MyLinkedNode<T>(head.Data);
-                    currNode.Next = head.Next;
+                    currNode = head;
 
                     // Hop down the chain index # of times
                     for (int i = 0; i < index; i++)
@@ -57,8 +56,6 @@
 
                     // Return the data where we stopped
                     return currNode.Data;
-                    
-
                 }
                 throw new IndexOutOfRangeException();
 
@@ -74,8 +71,7 @@
                 if (index < Count)
                 {
                     // Start at the head
-                    currNode = new MyLinkedNode<T>(head.Data);
-                    currNode.Next = head.Next;
+                    currNode = head;
 
                     // Hop down the chain index # of times
                     for (int i = 0; i < index; i++)
@@ -85,9 +81,11 @@
 
                     // Return the data where we stopped
                     currNode.Data = value;
-
                 }
-                throw new IndexOutOfRangeException();
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                } 
                 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             }
         }
@@ -121,7 +119,6 @@
                         // Now make that last node refer to the new one
                         currNode.Next = new MyLinkedNode<T>(data);
                         //currNode = new MyLinkedNode<T>(currNode.Data);
-                        break;
                     }
                     //If it isnt the end, keep searching
                     else
@@ -129,7 +126,7 @@
                         currNode = currNode.Next;
                     }
                 }
-                while (currNode.Next != null);
+                while (!currNode.Data.Equals(data));
             }
 
             // No matter how we added, update the count
@@ -171,18 +168,19 @@
             {
                 // We actually want to check if we're removing the node AFTER the one
                 // we're currently on.
-                if (currNode.Next.Equals(data))
+                if (currNode.Next.Data.CompareTo(data) == 0)
                 {
-                    currNode.Next = new MyLinkedNode<T>(currNode.Next.Next.Data);
+                    currNode.Next = currNode.Next.Next;
+                    Count--;
                     break;
                 }
                 //If it isnt the end, keep searching
                 else
                 {
-                    currNode = new MyLinkedNode<T>(currNode.Next.Data);
+                    currNode = currNode.Next;
                 }
             }
-            while (currNode.Next != null);
+            while (currNode.Data.CompareTo(data) != 0);
 
             // If we got this far, we didn't find anything to remove
             return false;
