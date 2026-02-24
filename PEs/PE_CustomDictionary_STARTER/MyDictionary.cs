@@ -76,14 +76,27 @@
             set
             {
                 // TODO: Implement the set accessor for the indexer.
-                // Find the bucket for this key.
-                // Search the list in that bucket for the key.
-                // Update that element in the bucket with a new pair
-                // (Because KeyValuePair instances are immutable, we can't change the value
-                // in place. We have to replace the old pair with a new one.)
+                int bucket;
+                KeyValuePair<TKey, TValue> setPair;
+                try
+                {
+                    // Find the bucket for this key.
+                    bucket = GetBucket(key);
 
-                // If the key was not found, throw an exception
-                throw new KeyNotFoundException($"{key} not found.");
+                    // Search the list in that bucket for the key.
+                    foreach (KeyValuePair<TKey, TValue> pair in _hashTable[bucket])
+                    {
+                        // Update that element in the bucket with a new pair
+                        // (Because KeyValuePair instances are immutable, we can't change the value
+                        // in place. We have to replace the old pair with a new one.
+                        //_hashTable[bucket] = new KeyValuePair<TKey, TValue>(key, value);
+                    }
+                }
+                catch (Exception) 
+                {
+                    // If the key was not found, throw an exception
+                    throw new KeyNotFoundException($"{key} not found.");
+                }
             }
         }
 
@@ -95,10 +108,22 @@
         {
             // TODO: Implement the Add method.
             // Find the bucket for this key.
+            int bucket = GetBucket(key);
             // Search the list in that bucket for the key.
-            // Throw an exception if the key already exists
-            // Add the key/value pair to the list in the bucket
-            // Increment the count
+            foreach(KeyValuePair<TKey, TValue> pair in _hashTable[bucket])
+            {
+                // Throw an exception if the key already exists
+                if (pair.Key.Equals(key))
+                {
+                    throw new Exception("This key already exists");
+                }
+
+                // Add the key/value pair to the list in the bucket
+                _hashTable[bucket].Add(new KeyValuePair<TKey, TValue>(key, value));
+
+                // Increment the count
+                Count++;
+            }
         }
 
         /// <summary>
@@ -108,9 +133,17 @@
         {
             // TODO: Implement the ContainsKey method.
             // Find the bucket for this key.
-            // Search the list in that bucket for the key.
-            // Return true if found
+            int bucket = GetBucket(key);
 
+            // Search the list in that bucket for the key.
+            foreach(KeyValuePair<TKey, TValue> pair in _hashTable[bucket])
+            {
+                if (pair.Key.Equals(key))
+                {
+                    // Return true if found
+                    return true;
+                }
+            }
             // Return false if not found
             return false;
         }
