@@ -63,7 +63,7 @@ namespace PE_CustomDictionary
                     bucket = GetBucket(key);
 
                     // Search the list in that bucket for the key.
-                    foreach(List < KeyValuePair < TKey, TValue >> pair in _hashTable)
+                    foreach(List <KeyValuePair<TKey, TValue>> pair in _hashTable)
                     {
                         if (pair[bucket].Key.Equals(key))
                         {
@@ -125,13 +125,13 @@ namespace PE_CustomDictionary
             foreach(List<KeyValuePair<TKey, TValue>> list in _hashTable)
             {
                 // Throw an exception if the key already exists
-                    foreach (KeyValuePair<TKey, TValue> pair in list)
+                foreach (KeyValuePair<TKey, TValue> pair in list)
+                {
+                    if(pair.Key.Equals(key.ToString().ToLower()) || pair.Key.Equals(key))
                     {
-                        if(pair.Key.Equals(key.ToString().ToLower()) || pair.Key.Equals(key))
-                        {
-                            throw new ArgumentException($"{key} already exists");
-                        }
+                    throw new ArgumentException($"{key} already exists");
                     }
+                }
 
                 // Add the key/value pair to the list in the bucket
                 _hashTable[bucket].Add(new KeyValuePair<TKey, TValue>(key, value));
