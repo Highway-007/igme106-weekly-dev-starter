@@ -1,4 +1,6 @@
-﻿namespace PE_CustomDictionary
+﻿using System.Collections.Generic;
+
+namespace PE_CustomDictionary
 {
     /// <summary>
     /// A simple custom dictionary implementation.
@@ -54,19 +56,22 @@
             {
                 // TODO: Implement the get accessor for the indexer.
                 TValue value;
+                int bucket;
                 try
                 {
                     // Find the bucket for this key.
-                    int bucket = GetBucket(key);
+                    bucket = GetBucket(key);
 
                     // Search the list in that bucket for the key.
-                    if (_hashTable[bucket].Contains(key))
+                    foreach(List < KeyValuePair < TKey, TValue >> pair in _hashTable)
                     {
-                        //value = _hashTable[bucket];
+                        if (pair[bucket].Key.Equals(key))
+                        {
+                            value = pair[bucket].Value;
 
-                        // Return the value if found
-                        return value;
-
+                            // Return the value if found
+                            return value;
+                        }
                     }
                 }
                 catch (Exception){ }
@@ -79,19 +84,23 @@
             {
                 // TODO: Implement the set accessor for the indexer.
                 int bucket;
-                KeyValuePair<TKey, TValue> setPair;
+
                 try
                 {
                     // Find the bucket for this key.
                     bucket = GetBucket(key);
 
                     // Search the list in that bucket for the key.
-                    foreach (KeyValuePair<TKey, TValue> pair in _hashTable[bucket])
+                    foreach (List<KeyValuePair<TKey, TValue>> pair in _hashTable)
                     {
-                        // Update that element in the bucket with a new pair
-                        // (Because KeyValuePair instances are immutable, we can't change the value
-                        // in place. We have to replace the old pair with a new one.
-                        //_hashTable[bucket] = new KeyValuePair<TKey, TValue>(key, value);
+                        if (pair[bucket].Key.Equals(key))
+                        {
+                            // Update that element in the bucket with a new pair
+                            // (Because KeyValuePair instances are immutable, we can't change the value
+                            // in place. We have to replace the old pair with a new one.
+
+                            pair[bucket] = new KeyValuePair<TKey, TValue>(key, value);
+                        }
                     }
                 }
                 catch (Exception) 
@@ -111,20 +120,25 @@
             // TODO: Implement the Add method.
             // Find the bucket for this key.
             int bucket = GetBucket(key);
+
             // Search the list in that bucket for the key.
-            foreach(KeyValuePair<TKey, TValue> pair in _hashTable[bucket])
+            foreach(List<KeyValuePair<TKey, TValue>> list in _hashTable)
             {
                 // Throw an exception if the key already exists
-                if (pair.Key.Equals(key))
-                {
-                    throw new Exception("This key already exists");
-                }
+                    foreach (KeyValuePair<TKey, TValue> pair in list)
+                    {
+                        if(pair.Key.Equals(key.ToString().ToLower()) || pair.Key.Equals(key))
+                        {
+                            throw new ArgumentException($"{key} already exists");
+                        }
+                    }
 
                 // Add the key/value pair to the list in the bucket
                 _hashTable[bucket].Add(new KeyValuePair<TKey, TValue>(key, value));
 
                 // Increment the count
                 Count++;
+                break;
             }
         }
 
@@ -157,9 +171,9 @@
         {
             // TODO: Implement the ContainsValue method.
             // Search each list in the hash table for the value.
-            foreach(List<KeyValuePair<TKey, TValue>> l in _hashTable)
+            foreach(List<KeyValuePair<TKey, TValue>> list in _hashTable)
             {
-                foreach(KeyValuePair<TKey, TValue> pair in l)
+                foreach(KeyValuePair<TKey, TValue> pair in list)
                 {
                     // Return true if found
                     if (pair.Value.Equals(value))
