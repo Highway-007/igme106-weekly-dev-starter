@@ -122,6 +122,8 @@ namespace PE_CustomDictionary
             int bucket = GetBucket(key);
 
             // Search the list in that bucket for the key.
+
+            //KNOWN ERROR - It is not checking bucket 1 for dupes
             foreach(List<KeyValuePair<TKey, TValue>> list in _hashTable)
             {
                 // Throw an exception if the key already exists
@@ -132,14 +134,13 @@ namespace PE_CustomDictionary
                     throw new ArgumentException($"{key} already exists");
                     }
                 }
-
-                // Add the key/value pair to the list in the bucket
-                _hashTable[bucket].Add(new KeyValuePair<TKey, TValue>(key, value));
-
-                // Increment the count
-                Count++;
-                break;
             }
+
+            // Add the key/value pair to the list in the bucket
+            _hashTable[bucket].Add(new KeyValuePair<TKey, TValue>(key, value));
+
+            // Increment the count
+            Count++;
         }
 
         /// <summary>
