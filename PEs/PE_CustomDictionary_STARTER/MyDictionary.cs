@@ -60,11 +60,13 @@
                     int bucket = GetBucket(key);
 
                     // Search the list in that bucket for the key.
-                    foreach(KeyValuePair < TKey, TValue > pair in _hashTable[bucket])
+                    if (_hashTable[bucket].Contains(key))
                     {
-                        value = pair.Value;
+                        //value = _hashTable[bucket];
+
                         // Return the value if found
                         return value;
+
                     }
                 }
                 catch (Exception){ }
