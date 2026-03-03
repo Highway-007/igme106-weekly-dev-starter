@@ -30,6 +30,8 @@ namespace PE___Monogame_Drawing
             _graphics.PreferredBackBufferWidth = 600;  
             _graphics.PreferredBackBufferHeight = 600;  
             _graphics.ApplyChanges();
+            movement.X = 1;
+            movement.Y = 1;
 
             base.Initialize();
         }
@@ -54,16 +56,26 @@ namespace PE___Monogame_Drawing
                 Exit();
 
             // TODO: Add your update logic here
-            switch (catLoc)
+            if (catLoc.Right >= _graphics.PreferredBackBufferWidth)
             {
-                //case _graphics.PreferredBackBufferWidth:
-                 //   break;
-
-                default:
-                    movement.X = 1;
-                    movement.Y = 1;
-                    break;
+                movement.X = -1;
             }
+
+            if (catLoc.Left <= 0)
+            {
+                movement.X = 1;
+            }
+
+            if (catLoc.Bottom >= _graphics.PreferredBackBufferHeight)
+            {
+                movement.Y = -1;
+            }
+
+            if (catLoc.Bottom - catLoc.Height <= 0)
+            {
+                movement.Y = 1;
+            }
+
             catLoc.X += (int)movement.X;
             catLoc.Y += (int)movement.Y;
 
