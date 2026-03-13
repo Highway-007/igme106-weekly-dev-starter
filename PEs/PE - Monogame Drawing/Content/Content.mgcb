@@ -13,6 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin BounceFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:BounceFont.spritefont
+
 #begin cat.webp
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -24,4 +31,11 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:cat.webp
+
+#begin LabelFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:LabelFont.spritefont
 
