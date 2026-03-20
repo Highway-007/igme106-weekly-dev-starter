@@ -14,6 +14,10 @@ namespace PE_MarioWalking
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        //For state grabbing
+        private KeyboardState previousInput;
+        private KeyboardState currInput;
+
         // The Mario to draw depending on the current state
         private Mario mario;
 
@@ -74,17 +78,48 @@ namespace PE_MarioWalking
             // - Update Mario's state as needed
 
             // TODO: Step 1: Grab user input
+            currInput = Keyboard.GetState();
 
             // TODO: Step 2: Change state
 
+            if (previousInput.IsKeyDown(Keys.A) && currInput.IsKeyUp(Keys.A))
+            {
+                mario.State = MarioState.FaceLeft;
+            }
+
+            else if (previousInput.IsKeyDown(Keys.D) && currInput.IsKeyUp(Keys.D))
+            {
+                mario.State = MarioState.FaceRight;
+            }
+
+            if (currInput.IsKeyDown(Keys.A))
+            {
+                mario.State = MarioState.WalkLeft;
+            }
+
+            if (currInput.IsKeyDown(Keys.D))
+            {
+                mario.State = MarioState.WalkRight;
+            }
+
+            previousInput = currInput;
+
             // TODO: Step 3: Move Mario only when walking
+            switch (mario.State)
+            {
+                case MarioState.WalkLeft:
+                    mario.X -= 5;
+                    break;
+
+                case MarioState.WalkRight:
+                    mario.X += 5;
+                    break;
+            }
 
             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
             base.Update(gameTime);
         }
-
-
 
         /// <summary>
         /// This is called when the game should draw itself.

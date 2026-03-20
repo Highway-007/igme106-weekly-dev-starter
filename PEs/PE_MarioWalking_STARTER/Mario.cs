@@ -105,7 +105,25 @@ namespace PE_MarioWalking
             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
             // TODO: Check the finite state machine state here to
             // determine how exactly to draw Mario
-            DrawWalking(SpriteEffects.None, spriteBatch); // You may alter/remove this line
+
+            switch (state)
+            {
+                case MarioState.WalkLeft:
+                   DrawWalking(SpriteEffects.FlipHorizontally, spriteBatch);
+                    break;
+
+                case MarioState.WalkRight:
+                    DrawWalking(SpriteEffects.None, spriteBatch);
+                    break;
+
+                case MarioState.FaceLeft:
+                    DrawStanding(SpriteEffects.FlipHorizontally, spriteBatch);
+                    break;
+
+                case MarioState.FaceRight:
+                    DrawStanding(SpriteEffects.None, spriteBatch);
+                    break;
+            }
 
             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
         }
