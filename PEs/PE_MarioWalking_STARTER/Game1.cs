@@ -82,12 +82,12 @@ namespace PE_MarioWalking
 
             // TODO: Step 2: Change state
 
-            if (previousInput.IsKeyDown(Keys.A) && currInput.IsKeyUp(Keys.A))
+            if (previousInput.IsKeyDown(Keys.A) && currInput.IsKeyUp(Keys.A) || previousInput.IsKeyDown(Keys.S) && currInput.IsKeyUp(Keys.S) && mario.State == MarioState.CrouchLeft)
             {
                 mario.State = MarioState.FaceLeft;
             }
 
-            else if (previousInput.IsKeyDown(Keys.D) && currInput.IsKeyUp(Keys.D))
+            else if (previousInput.IsKeyDown(Keys.D) && currInput.IsKeyUp(Keys.D) || previousInput.IsKeyDown(Keys.S) && currInput.IsKeyUp(Keys.S) && mario.State == MarioState.CrouchRight)
             {
                 mario.State = MarioState.FaceRight;
             }
@@ -100,6 +100,16 @@ namespace PE_MarioWalking
             if (currInput.IsKeyDown(Keys.D))
             {
                 mario.State = MarioState.WalkRight;
+            }
+
+            if ((mario.State == MarioState.FaceLeft || mario.State == MarioState.WalkLeft) && currInput.IsKeyDown(Keys.S))
+            {
+                mario.State = MarioState.CrouchLeft;
+            }
+
+            else if ((mario.State == MarioState.FaceRight || mario.State == MarioState.WalkRight) && currInput.IsKeyDown(Keys.S))
+            {
+                mario.State = MarioState.CrouchRight;
             }
 
             previousInput = currInput;

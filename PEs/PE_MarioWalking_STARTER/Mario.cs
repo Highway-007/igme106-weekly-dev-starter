@@ -14,7 +14,9 @@ namespace PE_MarioWalking
         FaceLeft,
         WalkLeft,
         FaceRight,
-        WalkRight // TODO: Add state(s) to support crouching
+        WalkRight,
+        CrouchLeft,
+        CrouchRight
     }
 
     // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -123,6 +125,14 @@ namespace PE_MarioWalking
                 case MarioState.FaceRight:
                     DrawStanding(SpriteEffects.None, spriteBatch);
                     break;
+
+                case MarioState.CrouchLeft:
+                    DrawCrouching(SpriteEffects.FlipHorizontally, spriteBatch);
+                    break;
+
+                case MarioState.CrouchRight:
+                    DrawCrouching(SpriteEffects.None, spriteBatch);
+                    break;
             }
 
             // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -186,5 +196,22 @@ namespace PE_MarioWalking
         // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
         // TODO: Add a method to support drawing Mario crouching
+        private void DrawCrouching(SpriteEffects flipSprite, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(
+                spriteSheet,                    // - The texture to draw
+                marioLoc,                       // - The location to draw on the screen
+                new Rectangle(                  // - The "source" rectangle
+                    6 * MarioRectWidth,                          //   - This rectangle specifies
+                    MarioRectOffsetY,           //	   where "inside" the texture
+                    MarioRectWidth,             //     to get pixels (We don't want to
+                    MarioRectHeight),           //     draw the whole thing)
+                Color.White,                    // - The color
+                0,                              // - Rotation (none currently)
+                Vector2.Zero,                   // - Origin inside the image (top left)
+                1.0f,                           // - Scale (100% - no change)
+                flipSprite,                     // - Can be used to flip the image
+                0);                             // - Layer depth (unused)
+        }
     }
 }
