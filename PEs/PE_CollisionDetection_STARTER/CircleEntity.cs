@@ -74,7 +74,16 @@ namespace PE_CollisionDetection
 
         // ********************************************************************
         // TODO: Write the Intersects method to implement circle-circle collision detection
+        //   COMPLETE
         // ********************************************************************
+        public bool Intersects(CircleEntity other)
+        {
+            if(Vector2.Distance(center, other.center) < radius + other.radius)
+            {
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Draws this CircleEntity to the game window.
@@ -86,7 +95,8 @@ namespace PE_CollisionDetection
             // ********************************************************************
             // TODO: Use the correct (X, Y) and width and height to represent this circle's bounds
             // (0, 0, 0, 0) is a placeholder here and are NOT the correct values.
-            Rectangle circleRect = new Rectangle(0, 0, 0, 0);
+            //   COMPLETE
+            Rectangle circleRect = new Rectangle((int)X, (int)Y, radius * 2, radius * 2);
             // ********************************************************************
 
 

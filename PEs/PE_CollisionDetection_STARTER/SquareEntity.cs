@@ -58,8 +58,12 @@ namespace PE_CollisionDetection
 
         // ********************************************************************
         // TODO: Write the Intersects method of this SquareEntity class
+        //   COMPLETE
         // ********************************************************************
-        
+        public bool Intersects(SquareEntity other)
+        {
+            return this.squareRect.Intersects(other.SquareRect);
+        }
 
         /// <summary>
         /// Draws this SquareEntity to the game window.

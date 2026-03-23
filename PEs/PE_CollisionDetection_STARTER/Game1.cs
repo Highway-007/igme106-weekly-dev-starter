@@ -14,8 +14,8 @@ using System.Collections.Generic;
 // header like this in the primary file (Game1 for MG projects, Program.cs
 // for console apps).
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// Y O U R   N A M E
-// D A T E
+// Evan Kreg
+// 3/23/26
 // PE Write-up: https://docs.google.com/document/d/1TzHh7sb5lrnJOO7QyeJhEsM2koJzPTDvWSzKKCAjrEI/edit?usp=sharing
 // Notes: (Release notes, things to remember, etc.)
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,15 +164,81 @@ namespace PE_CollisionDetection
             switch (currentState)
             {
                 case SimulationState.Instructions:
-                   
+                    //Transfer to Square state when pressing 1
+                    if (currentKBState.IsKeyUp(Keys.NumPad1) && previousKBState.IsKeyDown(Keys.NumPad1))
+                    {
+                        currentState = SimulationState.Square;
+                    }
+
+                    //Transfer to Circle state when pressing 2
+                    if (currentKBState.IsKeyUp(Keys.NumPad2) && previousKBState.IsKeyDown(Keys.NumPad2))
+                    {
+                        currentState = SimulationState.Circle;
+                    }
                     break;
 
                 case SimulationState.Square:
-                    
+                    //Transfer to Circle state when pressing 2
+                    if (currentKBState.IsKeyUp(Keys.NumPad2) && previousKBState.IsKeyDown(Keys.NumPad2))
+                    {
+                        currentState = SimulationState.Circle;
+                    }
+
+                    //Move player left 5 pixels on left arrow press
+                    if (currentKBState.IsKeyDown(Keys.Left))
+                    {
+                        playerSquare.X -= 5;
+                    }
+
+                    //Move player right 5 pixels on right arrow press
+                    if (currentKBState.IsKeyDown(Keys.Right))
+                    {
+                        playerSquare.X += 5;
+                    }
+
+                    //Move player Down 5 pixels on Down arrow press
+                    if (currentKBState.IsKeyDown(Keys.Down))
+                    {
+                        playerSquare.Y += 5;
+                    }
+
+                    //Move player Up 5 pixels on Up arrow press
+                    if (currentKBState.IsKeyDown(Keys.Up))
+                    {
+                        playerSquare.Y -= 5;
+                    }
                     break;
 
                 case SimulationState.Circle:
-                   
+                    //Transfer to Square state when pressing 1
+                    if (currentKBState.IsKeyUp(Keys.NumPad1) && previousKBState.IsKeyDown(Keys.NumPad1))
+                    {
+                        currentState = SimulationState.Square;
+                    }
+
+                    //Move player left 5 pixels on left arrow press
+                    if (currentKBState.IsKeyDown(Keys.Left))
+                    {
+                        playerCircle.X -= 5;
+                    }
+
+                    //Move player right 5 pixels on right arrow press
+                    if (currentKBState.IsKeyDown(Keys.Right))
+                    {
+                        playerCircle.X += 5;
+                    }
+
+                    //Move player Down 5 pixels on Down arrow press
+                    if (currentKBState.IsKeyDown(Keys.Down))
+                    {
+                        playerCircle.Y += 5;
+                    }
+
+                    //Move player Up 5 pixels on Up arrow press
+                    if (currentKBState.IsKeyDown(Keys.Up))
+                    {
+                        playerCircle.Y -= 5;
+                    }
                     break;
             }
             // ****************************************************************
@@ -227,9 +293,30 @@ namespace PE_CollisionDetection
                     // Are any of the game objectse intersecting with the player square?
                     // If so, draw both the Player and that intersecting square in red.
                     // Otherwise, draw the player blue and the other objects white.
+                    //   COMPLETE
                     // ********************************************************
 
-                    break;
+                    playerSquare.Draw(_spriteBatch,
+                    Color.Blue);
+
+                    foreach (SquareEntity s in squareList)
+                    {
+                        if (playerSquare.Intersects(s))
+                        {
+                            playerSquare.Draw(_spriteBatch, 
+                                Color.Red);
+
+                            s.Draw(_spriteBatch, 
+                                Color.Red);
+                        }
+                        else 
+                        {
+                            s.Draw(_spriteBatch, 
+                                Color.White);
+                        }
+                    }
+
+                        break;
 
                 // ----- Circle shape state -----------------------------------
                 case SimulationState.Circle:
@@ -242,7 +329,28 @@ namespace PE_CollisionDetection
                     // Are any of the game objects intersecting with the player circle?
                     // If so, draw both the Player and that intersecting circle in red.
                     // Otherwise, draw the player blue and the other objects white.
+                    //   COMPLETE
                     // ********************************************************
+
+                    playerCircle.Draw(_spriteBatch,
+                    Color.Blue);
+
+                    foreach (CircleEntity c in circleList)
+                    {
+                        if (playerCircle.Intersects(c))
+                        {
+                            playerCircle.Draw(_spriteBatch,
+                                Color.Red);
+
+                            c.Draw(_spriteBatch, 
+                                Color.Red);
+                        }
+                        else
+                        {
+                            c.Draw(_spriteBatch, 
+                                Color.White);
+                        }
+                    }
 
                     break;
             }
