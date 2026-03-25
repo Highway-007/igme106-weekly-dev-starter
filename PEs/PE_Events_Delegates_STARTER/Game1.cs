@@ -64,7 +64,9 @@ namespace PE_MG_Buttons
                     font,
                     Color.LightBlue));
             buttons[0].OnLeftButtonClick += this.RandomizeBackground;
+            buttons[0].OnLeftButtonClick += this.LeftButtonClicked;
             buttons[0].OnRightButtonClick += this.RandomizeBackground;
+            buttons[0].OnRightButtonClick += this.RightButtonClicked;
 
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             // TODO: Add your additional button setup code here!
@@ -78,8 +80,11 @@ namespace PE_MG_Buttons
                 font,
                 Color.Aquamarine));
             buttons[1].OnLeftButtonClick += this.SpawnStacy;
+            buttons[1].OnLeftButtonClick += this.LeftButtonClicked;
             buttons[1].OnRightButtonClick += this.SpawnStacy;
+            buttons[1].OnRightButtonClick += this.RightButtonClicked;
 
+            //Button to cycle the current stacy image
             buttons.Add(new Button(
                 _graphics.GraphicsDevice,
                 new Rectangle(10, 280, 200, 100),
@@ -87,7 +92,9 @@ namespace PE_MG_Buttons
                 font,
                 Color.Lavender));
             buttons[2].OnLeftButtonClick += this.ChangeStacy;
+            buttons[2].OnLeftButtonClick += this.LeftButtonClicked;
             buttons[2].OnRightButtonClick += this.ChangeStacy;
+            buttons[2].OnRightButtonClick += this.RightButtonClicked;
         }
 
         // There is no need to add anything to Game1's Update method!
@@ -132,6 +139,11 @@ namespace PE_MG_Buttons
                     new Vector2(25, _graphics.PreferredBackBufferHeight - 50),
                     Color.Black);
             }
+
+            _spriteBatch.DrawString(font,
+                $"# of Clicks: Left Clicks - {leftClicks}, Right Clicks - {rightClicks}",
+                new Vector2(25, 10),
+                Color.Black);
 
             _spriteBatch.End();
 
@@ -179,6 +191,21 @@ namespace PE_MG_Buttons
             {
                 currStacy = 0;
             }
+        }
+        /// <summary>
+        /// Increments leftClicks on a left click
+        /// </summary>
+        public void LeftButtonClicked()
+        {
+            leftClicks++;
+        }
+
+        /// <summary>
+        /// Increments rightClicks on a right click
+        /// </summary>
+        public void RightButtonClicked()
+        {
+            rightClicks++;
         }
     }
 }
