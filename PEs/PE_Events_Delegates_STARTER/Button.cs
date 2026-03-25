@@ -36,7 +36,8 @@ namespace PE_MG_Buttons
         /// 
         /// The delegate will be called with a reference to the clicked button.
         /// </summary>
-        public event OnButtonClickDelegate OnButtonClick;
+        public event OnButtonClickDelegate OnLeftButtonClick;
+        public event OnButtonClickDelegate OnRightButtonClick;
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         // TODO: Add your new event here!
@@ -86,17 +87,26 @@ namespace PE_MG_Buttons
                 prevMState.LeftButton == ButtonState.Pressed &&
                 this.position.Contains(mState.Position))
             {
-                if (OnButtonClick != null)
+                if (OnLeftButtonClick != null)
                 {
-                    OnButtonClick();
+                    OnLeftButtonClick();
                 }
             }
 
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             // TODO: Add your new click detection here!
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            if (mState.RightButton == ButtonState.Released &&
+                prevMState.RightButton == ButtonState.Pressed &&
+                this.position.Contains(mState.Position))
+            {
+                if (OnRightButtonClick != null)
+                {
+                    OnRightButtonClick();
+                }
+            }
 
-            prevMState = mState;
+                prevMState = mState;
         }
 
         /// <summary>

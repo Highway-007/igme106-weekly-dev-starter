@@ -142,6 +142,7 @@ namespace PE_MarioWalking
             // Begin the sprite batch
             _spriteBatch.Begin();
 
+            _spriteBatch.Draw();
             mario.Draw(_spriteBatch);
 
             // End the sprite batch
