@@ -31,8 +31,19 @@ namespace PE_DynamicTrees
         public void Insert(int data)
         {
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            // TODO: Implement this method!
+            // TODO: Implement this method! - COMPLETED
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            //If there is no root, make one!
+            if(root == null)
+            {
+                root = new TreeNode(data);
+            }
+            else
+            {
+                //Otherwise call the private version of Insert
+                Insert(data, root);
+            }
         }
 
         /// <summary>
@@ -44,8 +55,44 @@ namespace PE_DynamicTrees
         private void Insert(int data, TreeNode node)
         {
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            // TODO: Implement this method!
+            // TODO: Implement this method! - COMPLETED
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            //if the data is less than the current node's: go left
+            if(node.Data > data)
+            {
+                //If there is no left child, make it
+                //Base Case
+                if(node.Left == null)
+                {
+                    node.Left = new TreeNode(data);
+                }
+
+                //otherwise, continue going down the tree
+                else
+                {
+                    //Recursive step/State Change
+                    Insert(data, node.Left);
+                }
+            }
+
+            //If the data is equal or greater than the current node's: go right
+            else
+            {
+                //if there is no right child, make one
+                //Base case
+                if(node.Right == null)
+                {
+                    node.Right = new TreeNode(data);
+                }
+
+                //Otherwise, continue down the tree
+                else
+                {
+                    //Recursive step/State change
+                    Insert(data, node.Right);
+                }
+            }
         }
     }
 }

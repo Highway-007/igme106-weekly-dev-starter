@@ -21,6 +21,9 @@ namespace PE_DynamicTrees
 		Tree treeGreen;
 		Tree treeBlue;
 
+		//Random
+		Random rng;
+
 		public Game1()
 		{
 			graphics = new GraphicsDeviceManager(this);
@@ -47,22 +50,56 @@ namespace PE_DynamicTrees
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
+			//create a random for the trees
+			rng = new Random();
+
 			// Create the three trees
 			treeRed = new Tree(Color.Red);
 			treeGreen = new Tree(Color.Green);
 			treeBlue = new Tree(Color.DodgerBlue);
 
-            // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            // TODO: Add logic to insert data into the red tree
-            // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			// TODO: Add logic to insert data into the red tree
+			//   -Needs to sprawl out in all directions
+			//   - Just needs to be random, with an average root node
+			// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			//   - COMPLETED
 
-            // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            // TODO: Add logic to insert data into the green tree
-            // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			//Average Node size for root
+			treeRed.Insert(100);
+			for(int i = 0; i < 100; i++)
+			{
+				//Random Node data
+				treeRed.Insert(rng.Next(0, 200));
+			}
+
+			//Notes: Larger max keeps the tree more centrally based, as there is a lesser chance for a super high or super low number
+
+			// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			// TODO: Add logic to insert data into the green tree
+			//   -Needs to be a circle
+			//   - Add 1 value, 1 value greater than it, 1 greater than that, and repeat.
+			// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			//   - COMPLETE
+
+			for(int i = 0; i < 100; i++)
+			{
+				treeGreen.Insert(i);
+			}
 
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             // TODO: Add logic to insert data into the blue tree
+            //   -Needs to sprawl Right
+            //   - If the node is very small, not much will be less than it
             // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            //   - COMPLETED
+
+            for (int i = 0;  i < 30; i++)
+			{
+				//Increases the value of the maximum over time, meaning the root will be very small
+				// and subsequent nodes will have a much higher likelihood of being large
+				treeBlue.Insert(rng.Next(0, i * 5));
+			}
         }
 
         /// <summary>
