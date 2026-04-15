@@ -215,10 +215,13 @@ namespace PE___Graphs
             currentVertex.IsVisited = true;
 
             //Start iterative search
-            while(queue.Count > 0)
-            {                
-               //If there is an adjacent unvisited room, queue it
-                if(GetAdjacentUnvisited(currentVertex.Name) != null)
+            do
+            {
+                //currentVertex is now the current front queue room
+                currentVertex = queue.Peek();
+
+                //If there is an adjacent unvisited room, queue it
+                if (GetAdjacentUnvisited(currentVertex.Name) != null)
                 {
                     queue.Enqueue(GetAdjacentUnvisited(currentVertex.Name));
                     Console.WriteLine($" - {queue.Last().Name}");
@@ -234,7 +237,7 @@ namespace PE___Graphs
                 {
                     queue.Dequeue();
                 }
-            }
+            } while (queue.Count > 0);
         }
     }
 }
